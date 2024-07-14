@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35013.160
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zincirimr.Web", "Zincirimr.Web\Zincirimr.Web.csproj", "{7544A3C1-5F85-48EC-A4BF-742456BDCE6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zincirimr.Data", "Zincirimr.Data\Zincirimr.Data.csproj", "{1CCD1A9B-8315-41AC-A2F3-C79E101982BD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7544A3C1-5F85-48EC-A4BF-742456BDCE6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7544A3C1-5F85-48EC-A4BF-742456BDCE6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7544A3C1-5F85-48EC-A4BF-742456BDCE6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7544A3C1-5F85-48EC-A4BF-742456BDCE6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CCD1A9B-8315-41AC-A2F3-C79E101982BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CCD1A9B-8315-41AC-A2F3-C79E101982BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CCD1A9B-8315-41AC-A2F3-C79E101982BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CCD1A9B-8315-41AC-A2F3-C79E101982BD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {191C9A31-CB7F-4757-BBFA-EA304AD6DB6D}
+	EndGlobalSection
+EndGlobal
