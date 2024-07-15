@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Zincirimr.Web.Models;
+using Zincirimr.Web.ViewModels;
 
 namespace Zincirimr.Web.Controllers
 {

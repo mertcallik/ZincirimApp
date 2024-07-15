@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "sweetalert2@11.12.2",
+      "destination": "wwwroot/lib/Alert"
+    },
+    {
+      "library": "tailwindcss@2.2.19",
+      "destination": "wwwroot/lib/tailwind"
+    }
+  ]
+}

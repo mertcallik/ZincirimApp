@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var message = TempData["confirmMessage"]??null;
+    var icon = TempData["icon"]??null;
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -6,44 +10,95 @@
     <title>@ViewData["Title"] - Zincirimr.Web</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="/lib/alert/sweetalert2.min.css"/>
     <link rel="stylesheet" href="~/Zincirimr.Web.styles.css" asp-append-version="true" />
+    <link href="/lib/tailwind/tailwind.min.css" rel="stylesheet"/>
+    @await RenderSectionAsync("inHead",false)
+
+    <style>
+        @await RenderSectionAsync("style",false)
+
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Zincirimr.Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+<header>
+    <partial name="Navbar"/>
+</header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - Zincirimr.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+<footer class="border-top footer text-muted">
+    <div class="container">
+        &copy; 2024 - Zincirimr.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
+</footer>
+
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="/lib/alert/sweetalert2.min.js"></script>
+@if (message != null)
+{
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 10000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: "info",
+            title: "@message"
+        });
+    </script>
+}
+<script>
+    const navToggle = document.getElementById('nav-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    navToggle.addEventListener('click', (event) => {
+        event.stopPropagation();
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    const profileMenuToggle = document.getElementById('profile-menu-toggle');
+    const profileMenu = document.getElementById('profile-menu');
+
+    profileMenuToggle.addEventListener('click', (event) => {
+        event.stopPropagation();
+        profileMenu.classList.toggle('hidden');
+    });
+
+    // Close the profile menu when clicking outside of it
+    document.addEventListener('click', (event) => {
+        if (!profileMenu.contains(event.target) && !profileMenuToggle.contains(event.target)) {
+            profileMenu.classList.add('hidden');
+        }
+        if (!navToggle.contains(event.target) && !mobileMenu.contains(event.target)) {
+            mobileMenu.classList.add('hidden');
+        }
+    });
+
+    profileMenu.addEventListener('click', (event) => {
+        event.stopPropagation();
+    });
+
+    mobileMenu.addEventListener('click', (event) => {
+        event.stopPropagation();
+    });
+</script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
