@@ -6,7 +6,7 @@ namespace Zincirimr.Web.Models
     {
         public List<CartItem> CartItems { get; set; } = new List<CartItem>();
 
-        public void AddItem(Product product,int quantity)
+        public virtual void AddItem(Product product,int quantity)
         {
             var item = CartItems.FirstOrDefault(c => c.Product.Id == product.Id);
             if (item==null)
@@ -19,12 +19,12 @@ namespace Zincirimr.Web.Models
             }
         }
 
-        public double CalculateTotal()
+        public virtual double CalculateTotal()
         {
             var total = CartItems.Sum(c => c.Product.Price * c.Quantity);
             return total.Value;
         }
-        public void Remove(Product product)
+        public virtual void Remove(Product product)
         {
             var item= CartItems.FirstOrDefault(c => c.Product.Id == product.Id);
             if (item!=null)
@@ -40,7 +40,7 @@ namespace Zincirimr.Web.Models
             }
         }
 
-        public void RemoveAll()
+        public virtual void RemoveAll()
         {
             CartItems.Clear();
         }

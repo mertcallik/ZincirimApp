@@ -149,8 +149,8 @@
                         <h5 class="card-title">@item.Name</h5>
                         <p class="card-text text-secondary fw-lighter">@item.Price.Value.ToString("##,###")TL</p>
                         <form method="post" asp-page="/Cart">
-                            <input  type="hidden" asp-for="@item.Url" name="url" value="@item.Url"/>
-                            <button class="btn btn-dark w-100">Sepete Ekle</button>
+                            <input type="hidden" name="url" value="@item.Url"/>
+                            <button type="submit" class="btn btn-dark w-100">Sepete Ekle</button>
                         </form>
                     </div>
                 </div>

@@ -10,15 +10,15 @@ namespace Zincirimr.Web.Pages
     {
         private IProductRepository _productRepository;
 
-        public CartModel(IProductRepository productRepository )
+        public CartModel(IProductRepository productRepository, Cart cartService)
         {
             _productRepository = productRepository;
+            Cart = cartService;
         }
 
         public Cart? Cart { get; set; }
         public void OnGet()
         {
-          Cart=HttpContext.Session.GetJson<Cart>("cart");
 
         }
         public IActionResult OnPost(string? url)
@@ -29,9 +29,9 @@ namespace Zincirimr.Web.Pages
                 var product = _productRepository.Products.FirstOrDefault(p => p.Url == url);
                 if (product!=null)
                 {
-                    Cart = HttpContext.Session.GetJson<Cart>("cart")??new Cart();
-                   Cart.AddItem(product, 1);
-                   HttpContext.Session.SetJson("cart",Cart);
+                    Console.WriteLine("eklendi");
+
+                    Cart?.AddItem(product, 1);
                 
                 }
 
@@ -49,9 +49,7 @@ namespace Zincirimr.Web.Pages
                 var product = _productRepository.Products.FirstOrDefault(p => p.Url == url);
                 if (product != null)
                 {
-                    Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
-                    Cart.Remove(product);
-                    HttpContext.Session.SetJson("cart", Cart);
+                    Cart?.Remove(product);
 
                 }
 
@@ -63,9 +61,7 @@ namespace Zincirimr.Web.Pages
 
         public IActionResult OnPostClear()
         {
-            Cart=HttpContext.Session.GetJson<Cart>("cart")??new Cart();
-            Cart.RemoveAll();
-            HttpContext.Session.SetJson("cart", Cart);
+            Cart?.RemoveAll();
             return RedirectToPage("/Cart");
         }
     }

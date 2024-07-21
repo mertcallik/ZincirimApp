@@ -31,7 +31,7 @@ namespace Zincirimr.Web.Controllers
 
             var model = new ProductListViewModel()
             {
-                ProductsList = _mapper.Map<IEnumerable<Product>,IEnumerable<ProductViewModel>>(_productRepository.GetProductsByCategory(category, page, _pageSize)).ToList(),
+                ProductsList = _mapper.Map<IEnumerable<Product>,IEnumerable<ProductViewModel>>(_productRepository.GetProductsByCategory(category??"", page, _pageSize)).ToList(),
                 PageInfo = new PageInfo()
                 {
                     CurrentPage = page,
