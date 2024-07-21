@@ -3,6 +3,17 @@
 @{
 
 }
+@section style
+{
+    .topbar {
+    height: 0;
+    line-height: 0; /* Metni gizlemek için */
+    padding: 0; /* İç boşlukları kaldır */
+    }
+
+
+
+}
 <div class="font-[sans-serif] bg-white h-full mt-2">
     <div class="max-w-7xl max-lg:max-w-3xl mx-auto p-6">
         <h2 class="text-3xl font-extrabold text-gray-800">Sepet</h2>
@@ -11,6 +22,7 @@
             <div class="lg:col-span-2 space-y-6">
                 @foreach (var item in Model.Cart.CartItems)
                 {
+
                     <div class="p-2 bg-white shadow-[0_3px_20px_-10px_rgba(6,81,237,0.4)] rounded-md relative">
                         <div class="grid sm:grid-cols-2 items-center gap-4">
 

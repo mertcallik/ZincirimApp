@@ -7,6 +7,7 @@ using Zincirimr.Data.Abstract;
 using Zincirimr.Data.Concreate;
 using Zincirimr.Data.Concreate.Ef;
 using Zincirimr.Data.Models;
+using Zincirimr.Web.Models;
 using Zincirimr.Web.Models.Mail;
 
 namespace Zincirimr.Web
@@ -80,6 +81,8 @@ namespace Zincirimr.Web
                     builder.Configuration["Brevo:sender"]
                 )
             );
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            builder.Services.AddScoped<Cart>(sc=>SessionCart.GetCart(sc));
 
             var app = builder.Build();
 
