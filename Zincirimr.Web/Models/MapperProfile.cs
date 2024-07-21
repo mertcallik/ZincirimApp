@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Zincirimr.Data.Models;
+using Zincirimr.Web.Components;
 using Zincirimr.Web.ViewModels;
 
 namespace Zincirimr.Web.Models
@@ -10,6 +11,8 @@ namespace Zincirimr.Web.Models
         {
             CreateMap<AuthRegisterViewModel, AppUser>();
             CreateMap<AuthLoginViewModel, AppUser>();
+            CreateMap<Category, CategoryViewModel>();
+            CreateMap<Product,ProductViewModel>();
         }
     }
 }

@@ -7,8 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Helpers\" />
+    <Compile Remove="wwwroot\lib\swiper\**" />
+    <Content Remove="wwwroot\lib\swiper\**" />
+    <EmbeddedResource Remove="wwwroot\lib\swiper\**" />
+    <None Remove="wwwroot\lib\swiper\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\Shared\" />
+    <Folder Include="wwwroot\img\Category\" />
     <Folder Include="wwwroot\lib\alert\" />
+    <Folder Include="wwwroot\lib\swiperjs\" />
   </ItemGroup>
 
   <ItemGroup>

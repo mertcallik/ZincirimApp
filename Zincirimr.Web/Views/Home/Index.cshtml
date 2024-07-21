@@ -1,8 +1,224 @@
-﻿@{
+﻿@model ProductListViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
+@section inHead
+{
+    <link rel="stylesheet" href="/lib/swiper/swiper-bundle.min.css" />
+}
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@section style
+{
+            .swiper-container {
+                width: 100%;
+                height: 400px; /* veya istediğiniz yükseklik */
+            }
+
+            .swiper {
+                width: 100%;
+                height: 100%;
+            }
+
+            .swiper-slide {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .swiper-slide img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+
+            .autoplay-progress {
+                position: absolute;
+                right: 16px;
+                bottom: 16px;
+                z-index: 10;
+                width: 48px;
+                height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                color: var(--swiper-theme-color);
+            }
+
+            .autoplay-progress svg {
+                --progress: 0;
+                position: absolute;
+                left: 0;
+                top: 0px;
+                z-index: 10;
+                width: 100%;
+                height: 100%;
+                stroke-width: 4px;
+                stroke: var(--swiper-theme-color);
+                fill: none;
+                stroke-dashoffset: calc(125.6px * (1 - var(--progress)));
+                stroke-dasharray: 125.6;
+                transform: rotate(-90deg);
+            }
+
+            @@media (max-width: 768px) {
+            .swiper-container {
+                height: 300px; /* Mobil cihazlar için daha küçük yükseklik */
+            }
+            }
+
+            @@media (max-width: 480px) {
+        .swiper-container {
+            height: 200px; /* Daha küçük mobil cihazlar için daha da küçük yükseklik */
+        }
+        }
+
+        .category-icon {
+        font-size: 2rem;
+        color: #333;
+        }
+        .product-card {
+        transition: transform 0.3s;
+        }
+        .product-card:hover {
+        transform: translateY(-5px);
+        }
+        .heart-icon {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 1.5rem;
+        color: #ccc;
+        cursor: pointer;
+        }
+        .heart-icon.active {
+        color: red;
+        }
+}
+
+<div class="container my-3 ">
+    <div class="swiper-container" style="width: 100%; height: 400px;">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper rounded">
+                <div class="swiper-slide"><img src="/img/slide2.png" /></div>
+                <div class="swiper-slide"><img src="/img/slide2.png" /></div>
+                <div class="swiper-slide"><img src="/img/slide2.png" /></div>
+                <div class="swiper-slide"><img src="/img/slide2.png" /></div>
+                <div class="swiper-slide"><img src="/img/slide2.png" /></div>
+                <div class="swiper-slide"><img src="/img/slide2.png" /></div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+            <div class="autoplay-progress">
+                <svg viewBox="0 0 48 48">
+                    <circle cx="24" cy="24" r="20"></circle>
+                </svg>
+                <span></span>
+            </div>
+        </div>
+    </div>
 </div>
+
+<vc:categories-list></vc:categories-list>
+
+<div>
+
+    <ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+            <a class="nav-link active" href="#">New Arrival</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Bestseller</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Featured Products</a>
+        </li>
+    </ul>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        @foreach (var item in Model.ProductsList)
+        {
+            <div class="col">
+                <div class="card h-100 product-card">
+                    <i class="bi bi-heart heart-icon"></i>
+                    <img src="/img/Product/@item.Image" class="card-img-top p-1" alt="iPhone">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text text-secondary fw-lighter">@item.Price.Value.ToString("##,###")TL</p>
+                        <form method="post" asp-page="/Cart">
+                            <input  type="hidden" asp-for="@item.Url" name="url" value="@item.Url"/>
+                            <button class="btn btn-dark w-100">Sepete Ekle</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+    </div>
+    <div class="d-flex justify-content-center mt-5">
+        <nav aria-label="Page navigation example ">
+            <ul class="pagination gap-1">
+                @if (Model.PageInfo.CurrentPage > 1)
+                {
+                    <li class="page-item "><a class="page-link text-dark" asp-action="Index" asp-route-page="@(Model.PageInfo.CurrentPage - 1)">Previous</a></li>
+
+                }
+                <div page-model="@Model.PageInfo" class="text-center" page-action="index" page-class-active="btn btn-dark btn-group" page-class-link="btn btn-outline-dark btn-group">
+
+                </div>
+                
+                @if (Model.PageInfo.CurrentPage < Model.PageInfo.TotalPages)
+                {
+                    <li class="page-item"><a class="page-link text-dark" asp-action="Index" asp-route-page="@(Model.PageInfo.CurrentPage + 1)">Previous</a></li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+@section Scripts
+{
+
+    <script>
+        document.querySelectorAll('.heart-icon').forEach(icon => {
+            icon.addEventListener('click', function () {
+                this.classList.toggle('active');
+            });
+        });
+    </script>
+
+    <script src="lib/swiper/swiper-bundle.min.js"></script>
+
+    <script>
+        const progressCircle = document.querySelector(".autoplay-progress svg");
+        const progressContent = document.querySelector(".autoplay-progress span");
+        var swiper = new Swiper(".mySwiper", {
+            spaceBetween: 30,
+            centeredSlides: true,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev"
+            },
+            on: {
+                autoplayTimeLeft(s, time, progress) {
+                    progressCircle.style.setProperty("--progress", 1 - progress);
+                    progressContent.textContent = `${Math.ceil(time / 1000)}s`;
+                }
+            }
+        });
+
+    </script>
+}

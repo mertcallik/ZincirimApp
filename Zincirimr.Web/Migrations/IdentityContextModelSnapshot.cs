@@ -226,6 +226,263 @@ namespace Zincirimr.Web.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Zincirimr.Data.Models.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("bootstrapicon")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Url")
+                        .IsUnique()
+                        .HasFilter("[Url] IS NOT NULL");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Image = "",
+                            Name = "Telefon",
+                            Url = "telefon",
+                            bootstrapicon = ""
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Image = "",
+                            Name = "Tablet",
+                            Url = "tablet",
+                            bootstrapicon = ""
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Image = "",
+                            Name = "Bilgisayar",
+                            Url = "bilgisayar",
+                            bootstrapicon = ""
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Image = "",
+                            Name = "Laptop",
+                            Url = "laptop",
+                            bootstrapicon = ""
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Image = "",
+                            Name = "Eletronik",
+                            Url = "Elektronik",
+                            bootstrapicon = ""
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Image = "",
+                            Name = "Akıllı Ev Aletleri",
+                            Url = "akillievaletleri",
+                            bootstrapicon = ""
+                        });
+                });
+
+            modelBuilder.Entity("Zincirimr.Data.Models.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Url")
+                        .IsUnique()
+                        .HasFilter("[Url] IS NOT NULL");
+
+                    b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Image = "iphone1.png",
+                            Name = "iPhone 15 Plus",
+                            Price = 75000.0,
+                            Url = "iphone15plus"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Image = "iphone1.png",
+                            Name = "iPhone 15 Pro Max",
+                            Price = 95000.0,
+                            Url = "iphone15promax"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Image = "iphone1.png",
+                            Name = "iPhone 15 Pro",
+                            Price = 95000.0,
+                            Url = "iphone15pro"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Image = "iphone1.png",
+                            Name = "iPhone 15",
+                            Price = 95000.0,
+                            Url = "iphone15"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Image = "iphone1.png",
+                            Name = "iPhone 14 Plus",
+                            Price = 95000.0,
+                            Url = "iphone14plus"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Image = "iphone1.png",
+                            Name = "iPhone 14 Pro Max",
+                            Price = 95000.0,
+                            Url = "iphone14promax"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Image = "iphone1.png",
+                            Name = "iPhone 14 Pro",
+                            Price = 95000.0,
+                            Url = "iphone14pro"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Image = "iphone1.png",
+                            Name = "iPhone 14",
+                            Price = 95000.0,
+                            Url = "iphone14"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Image = "iphone1.png",
+                            Name = "iPhone 13 Pro Max",
+                            Price = 95000.0,
+                            Url = "iphone13promax"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Image = "macbook.png",
+                            Name = "MacBook Air M2",
+                            Price = 95000.0,
+                            Url = "macbookairm2"
+                        });
+                });
+
+            modelBuilder.Entity("Zincirimr.Data.Models.ProductCategory", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CategoryId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductCategory");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            ProductId = 1
+                        },
+                        new
+                        {
+                            CategoryId = 1,
+                            ProductId = 2
+                        },
+                        new
+                        {
+                            CategoryId = 1,
+                            ProductId = 3
+                        },
+                        new
+                        {
+                            CategoryId = 1,
+                            ProductId = 4
+                        },
+                        new
+                        {
+                            CategoryId = 1,
+                            ProductId = 5
+                        },
+                        new
+                        {
+                            CategoryId = 1,
+                            ProductId = 6
+                        },
+                        new
+                        {
+                            CategoryId = 1,
+                            ProductId = 7
+                        },
+                        new
+                        {
+                            CategoryId = 1,
+                            ProductId = 8
+                        },
+                        new
+                        {
+                            CategoryId = 1,
+                            ProductId = 9
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            ProductId = 10
+                        });
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Zincirimr.Data.Models.AppRole", null)
@@ -273,6 +530,21 @@ namespace Zincirimr.Web.Migrations
                     b.HasOne("Zincirimr.Data.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Zincirimr.Data.Models.ProductCategory", b =>
+                {
+                    b.HasOne("Zincirimr.Data.Models.Category", null)
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Zincirimr.Data.Models.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

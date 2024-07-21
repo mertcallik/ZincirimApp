@@ -1,6 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Zincirimr.Data.Abstract;
+using Zincirimr.Data.Models;
 using Zincirimr.Web.Models;
+using Zincirimr.Web.Components;
 using Zincirimr.Web.ViewModels;
 
 namespace Zincirimr.Web.Controllers
@@ -8,15 +14,33 @@ namespace Zincirimr.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IProductRepository _productRepository;
+        private IMapper _mapper;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IProductRepository productRepository, IMapper mapper)
         {
             _logger = logger;
+            _productRepository = productRepository;
+            _mapper = mapper;
         }
+        private int _pageSize = 4;
 
-        public IActionResult Index()
+        [HttpGet] 
+        public IActionResult Index(string? category, int page = 1)
         {
-            return View();
+
+            var model = new ProductListViewModel()
+            {
+                ProductsList = _mapper.Map<IEnumerable<Product>,IEnumerable<ProductViewModel>>(_productRepository.GetProductsByCategory(category, page, _pageSize)).ToList(),
+                PageInfo = new PageInfo()
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = _pageSize,
+                    TotalItems = _productRepository.GetProductCount(category)
+                }
+            };
+            
+            return View(model);
         }
 
         public IActionResult Privacy()

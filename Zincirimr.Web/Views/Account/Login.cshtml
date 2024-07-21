@@ -3,39 +3,44 @@
 
 }
 
-<div class="container mt-5">
-    <h3 class="text-center fw-lighter">Login</h3>
-    <div class="row justify-content-center">
-        <div class="col-md-6 shadow-sm">
-            <form asp-action="Login" asp-controller="Account" method="post">
+    <div class="col">
+        <div class="container mt-5">
+            <h3 class="text-center fw-lighter">Login</h3>
+            <div class="row justify-content-center">
+                <div class="col-md-6 shadow-sm">
 
-                <div class="mb-3">
-                    <label asp-for="Email" class="form-label">Email</label>
-                    <input asp-for="Email" class="form-control"/>
-                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <form asp-action="Login" asp-controller="Account" method="post">
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" class="form-control"/>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label">Şifre</label>
+                            <input asp-for="Password" class="form-control"/>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input asp-for="RememberMe" class="form-check-input" type="checkbox"/>
+                            <label asp-for="RememberMe" class="form-check-label">Beni hatırla</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Giriş Yap</button>
+                        <div class="text-danger" asp-validation-summary="All"></div>
+                    </form>
+                    <div class="mt-3">
+                        <span>Hesabınız yok mu? <a asp-action="Register" asp-controller="Account">Kayıt Ol</a></span>
+                        <span><a href="#">Şifremi Unuttum</a></span>
+                    </div>
                 </div>
-
-                <div class="mb-3">
-                    <label asp-for="Password" class="form-label">Şifre</label>
-                    <input asp-for="Password" class="form-control"/>
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-
-                <div class="mb-3 form-check">
-                    <input asp-for="RememberMe" class="form-check-input" type="checkbox"/>
-                    <label asp-for="RememberMe" class="form-check-label">Beni hatırla</label>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Giriş Yap</button>
-                <div class="text-danger" asp-validation-summary="All"></div>
-            </form>
-            <div class="mt-3">
-                <span>Hesabınız yok mu? <a asp-action="Register" asp-controller="Account">Kayıt Ol</a></span>
-                <span><a href="#">Şifremi Unuttum</a></span>
             </div>
         </div>
+
     </div>
-</div>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

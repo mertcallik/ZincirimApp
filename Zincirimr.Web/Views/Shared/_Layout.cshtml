@@ -13,11 +13,11 @@
     <link rel="stylesheet" href="/lib/alert/sweetalert2.min.css"/>
     <link rel="stylesheet" href="~/Zincirimr.Web.styles.css" asp-append-version="true" />
     <link href="/lib/tailwind/tailwind.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     @await RenderSectionAsync("inHead",false)
 
     <style>
         @await RenderSectionAsync("style",false)
-
     </style>
 </head>
 <body>
@@ -25,13 +25,14 @@
     <partial name="Navbar"/>
 </header>
 
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+<div class="container">
+    <main role="main" class="mb-5 pb-5">
 
-<footer class="border-top footer text-muted">
+        @RenderBody()
+    </main>
+</div>
+
+<footer class="border-top footer text-muted fixed-bottom">
     <div class="container">
         &copy; 2024 - Zincirimr.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
     </div>
@@ -43,6 +44,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 <script src="/lib/alert/sweetalert2.min.js"></script>
+
 @if (message != null)
 {
     <script>
@@ -50,7 +52,7 @@
             toast: true,
             position: "top-end",
             showConfirmButton: false,
-            timer: 10000,
+            timer: 7000,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.onmouseenter = Swal.stopTimer;
@@ -63,40 +65,70 @@
         });
     </script>
 }
+
 <script>
-    const navToggle = document.getElementById('nav-toggle');
+  document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
+    const categoriesButton = document.getElementById('categories-button');
+    const categoriesMenu = document.getElementById('categories-menu');
+    const mobileCategoriesButton = document.getElementById('mobile-categories-button');
+    const mobileCategoriesMenu = document.getElementById('mobile-categories-menu');
 
-    navToggle.addEventListener('click', (event) => {
-        event.stopPropagation();
-        mobileMenu.classList.toggle('hidden');
-    });
+    // Kullanıcı menüsü elemanları (eğer varsa)
+    const userMenuButton = document.getElementById('user-menu-button');
+    const userMenu = document.getElementById('user-menu');
+    const mobileUserMenuButton = document.getElementById('mobile-user-menu-button');
+    const mobileUserMenu = document.getElementById('mobile-user-menu');
 
-    const profileMenuToggle = document.getElementById('profile-menu-toggle');
-    const profileMenu = document.getElementById('profile-menu');
-
-    profileMenuToggle.addEventListener('click', (event) => {
-        event.stopPropagation();
-        profileMenu.classList.toggle('hidden');
-    });
-
-    // Close the profile menu when clicking outside of it
-    document.addEventListener('click', (event) => {
-        if (!profileMenu.contains(event.target) && !profileMenuToggle.contains(event.target)) {
-            profileMenu.classList.add('hidden');
+    function toggleMenu(button, menu) {
+        if (button && menu) {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                menu.classList.toggle('hidden');
+            });
         }
-        if (!navToggle.contains(event.target) && !mobileMenu.contains(event.target)) {
-            mobileMenu.classList.add('hidden');
+    }
+
+    // Her zaman çalışması gereken menüler
+    toggleMenu(mobileMenuButton, mobileMenu);
+    toggleMenu(categoriesButton, categoriesMenu);
+    toggleMenu(mobileCategoriesButton, mobileCategoriesMenu);
+
+    // Kullanıcı oturum açmışsa çalışacak menüler
+    if (userMenuButton && userMenu) {
+        toggleMenu(userMenuButton, userMenu);
+    }
+    if (mobileUserMenuButton && mobileUserMenu) {
+        toggleMenu(mobileUserMenuButton, mobileUserMenu);
+    }
+
+    // Dropdown menülerini tıklama dışında bir yere tıklandığında kapatma
+    document.addEventListener('click', function(event) {
+        if (categoriesMenu && !categoriesButton.contains(event.target) && !categoriesMenu.contains(event.target)) {
+            categoriesMenu.classList.add('hidden');
+        }
+        if (mobileCategoriesMenu && !mobileCategoriesButton.contains(event.target) && !mobileCategoriesMenu.contains(event.target)) {
+            mobileCategoriesMenu.classList.add('hidden');
+        }
+        if (userMenu && !userMenuButton.contains(event.target) && !userMenu.contains(event.target)) {
+            userMenu.classList.add('hidden');
+        }
+        if (mobileUserMenu && !mobileUserMenuButton.contains(event.target) && !mobileUserMenu.contains(event.target)) {
+            mobileUserMenu.classList.add('hidden');
         }
     });
 
-    profileMenu.addEventListener('click', (event) => {
-        event.stopPropagation();
-    });
-
-    mobileMenu.addEventListener('click', (event) => {
-        event.stopPropagation();
-    });
+    // Kategoriler menüsü için hover efekti
+    if (categoriesButton && categoriesMenu) {
+        categoriesButton.addEventListener('mouseenter', function() {
+            categoriesMenu.classList.remove('hidden');
+        });
+        categoriesMenu.addEventListener('mouseleave', function() {
+            categoriesMenu.classList.add('hidden');
+        });
+    }
+});
 </script>
 
     @await RenderSectionAsync("Scripts", required: false)
