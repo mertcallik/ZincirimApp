@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+@if (!ViewData.ContainsKey("HideNavbar"))
+{
+    <nav>
+        <!-- Navbar içeriği -->
+    </nav>
+}
+<div>
+    @RenderBody()
+</div>
+@if (!ViewData.ContainsKey("HideFooter"))
+{
+    <footer>
+        <!-- Footer içeriği -->
+    </footer>
+}
+    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

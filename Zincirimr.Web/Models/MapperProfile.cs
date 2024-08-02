@@ -13,6 +13,8 @@ namespace Zincirimr.Web.Models
             CreateMap<AuthLoginViewModel, AppUser>();
             CreateMap<Category, CategoryViewModel>();
             CreateMap<Product,ProductViewModel>();
+            CreateMap<Address,AddressViewModel>();
+            CreateMap<AddressViewModel, Address>();
         }
     }
 }

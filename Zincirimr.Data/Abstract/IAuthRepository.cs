@@ -14,6 +14,7 @@ namespace Zincirimr.Data.Abstract
         Task<SignInResult> Login(string email, string password, bool rememberMe, bool lockoutOnFailure);
         Task<string> GenerateConfirmToken(string userId);
         Task<IdentityResult> ConfirmEmail(string userId, string token);
-
+        Task Logout();
+        Task<AppUser> FindUserFromId(string? userId);
     }
 }

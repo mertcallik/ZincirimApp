@@ -1,0 +1,20 @@
+﻿@model Cart;
+@{
+
+}
+<div class="top">
+    @if (Model.CartItems.Count > 0)
+    {
+
+        <small>
+
+            <a asp-page="/Cart" class="h6">
+                <i class="bi bi-cart"></i>
+                Sepeti Görüntüle
+            </a>
+            <a href="#" class="h5 text-gray-600 hover:text-gray-800">
+                <span class="bg-gray-200 rounded-full px-2 py-1 text-xs">@Model.CartItems.Sum(c=>c.Quantity)</span>
+            </a>
+        </small>
+    }
+</div>

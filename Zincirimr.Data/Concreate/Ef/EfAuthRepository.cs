@@ -6,6 +6,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Zincirimr.Data.Abstract;
 using Zincirimr.Data.Models;
 
@@ -16,12 +17,14 @@ namespace Zincirimr.Data.Concreate.Ef
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<AppRole> _roleManager;
+        private readonly IdentityContext _context;
 
-        public EfAuthRepository(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<AppRole> roleManager)
+        public EfAuthRepository(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<AppRole> roleManager, IdentityContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _context = context;
         }
         public async Task<IdentityResult> Register(AppUser user, string password)
         {
@@ -126,6 +129,27 @@ namespace Zincirimr.Data.Concreate.Ef
                 }
             }
             return IdentityResult.Failed();
+        }
+
+        public async Task Logout()
+        {
+            await _signInManager.SignOutAsync();
+        }
+
+        public async Task<AppUser> FindUserFromId(string? userId)
+        {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return null;
+            }
+
+            var user=await _userManager.FindByIdAsync(userId);
+            if (user==null)
+            {
+                return null;
+            }
+
+            return user;
         }
     }
 }

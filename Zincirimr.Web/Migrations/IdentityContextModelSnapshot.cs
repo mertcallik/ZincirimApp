@@ -128,6 +128,78 @@ namespace Zincirimr.Web.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Zincirimr.Data.Models.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactPhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SurName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Addresses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            City = "İstanbul",
+                            ContactPhoneNumber = "+90 5414625256",
+                            Country = "Turkey",
+                            FullAddress = "İstanbul Başakşehir Kayabaşı mah 51.bölge",
+                            IsActive = true,
+                            Name = "",
+                            PostalCode = "34000",
+                            State = "Başakşehir",
+                            Street = "51.bölge caddesi",
+                            SurName = "",
+                            UserId = "1"
+                        });
+                });
+
             modelBuilder.Entity("Zincirimr.Data.Models.AppRole", b =>
                 {
                     b.Property<string>("Id")
@@ -224,6 +296,25 @@ namespace Zincirimr.Web.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "4c03bb9e-c749-417a-8bed-ae8485fa5156",
+                            Email = "mertclkreal@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Mert",
+                            LastName = "Çalık",
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAIAAYagAAAAEJ688YIyzOpmIDGFsu4saE+xYuhzn4YBu07v88G1uKVqM00uHiOuce540LcxM4KLKg==",
+                            PhoneNumber = " +90 541 462 52 56",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "a714348a-ab7c-4f89-8dc8-c72a6d743285",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("Zincirimr.Data.Models.Category", b =>
@@ -303,6 +394,67 @@ namespace Zincirimr.Web.Migrations
                             Url = "akillievaletleri",
                             bootstrapicon = ""
                         });
+                });
+
+            modelBuilder.Entity("Zincirimr.Data.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("OrderData")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Zincirimr.Data.Models.OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderItem");
                 });
 
             modelBuilder.Entity("Zincirimr.Data.Models.Product", b =>
@@ -534,6 +686,57 @@ namespace Zincirimr.Web.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Zincirimr.Data.Models.Address", b =>
+                {
+                    b.HasOne("Zincirimr.Data.Models.AppUser", "AppUser")
+                        .WithMany("Addresses")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("Zincirimr.Data.Models.Order", b =>
+                {
+                    b.HasOne("Zincirimr.Data.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Zincirimr.Data.Models.AppUser", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("Zincirimr.Data.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Address");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Zincirimr.Data.Models.OrderItem", b =>
+                {
+                    b.HasOne("Zincirimr.Data.Models.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Zincirimr.Data.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Zincirimr.Data.Models.ProductCategory", b =>
                 {
                     b.HasOne("Zincirimr.Data.Models.Category", null)
@@ -547,6 +750,18 @@ namespace Zincirimr.Web.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Zincirimr.Data.Models.AppUser", b =>
+                {
+                    b.Navigation("Addresses");
+
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("Zincirimr.Data.Models.Order", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 #pragma warning restore 612, 618
         }

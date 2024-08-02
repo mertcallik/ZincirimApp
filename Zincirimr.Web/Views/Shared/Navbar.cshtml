@@ -2,7 +2,7 @@
     <div class="container d-flex justify-content-between text-white py-4">
         <h1>aaa</h1>
         <h1>aaa</h1>
-        <h1>aaa</h1>
+        <h1><vc:cart-summary></vc:cart-summary></h1>
     </div>
 </nav>
 <nav class="bg-white shadow-md" >
@@ -70,7 +70,7 @@
             </div>
 
             <!-- Kullanıcı işlemleri -->
-            <div class="hidden md:flex items-center space-x-10">
+            <div class="hidden md:flex items-center space-x-5">
                 @if (!User.Identity.IsAuthenticated)
                 {
                     <a asp-controller="Account" asp-action="Login" class="text-blue-500 hover:text-blue-600">Login</a>
@@ -79,19 +79,18 @@
                 }
                 else
                 {
-                    <div class="relative space-x-5">
+                    <div class="relative space-x-5" style="z-index: 1000">
                         <button id="user-menu-button" class="text-gray-600 hover:text-gray-800 focus:outline-none">
                             <i class="h4 bi bi-person"></i>
                         </button>
                         <!-- Kullanıcı dropdown menüsü -->
                         <div id="user-menu" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden">
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profiliniz</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Ayarlar</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Çıkış yap</a>
+                            <a asp-action="Profile" asp-controller="Account" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profil</a>
+                            <a asp-action="Logout" asp-controller="Account" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Çıkış yap</a>
                         </div>
-                        <a href="#" class="h5 text-gray-600 hover:text-gray-800">
+                        <a asp-page="/Cart" class="h5 text-gray-600 hover:text-gray-800">
                             <i class="bi bi-cart"></i>
-                            <span class="bg-gray-200 rounded-full px-2 py-1 text-xs">1</span>
+                            <span class="text-lg">Sepete Git</span>
                         </a>
                     </div>
                 }
@@ -126,9 +125,8 @@
                     </button>
                     <!-- Mobil kullanıcı dropdown menüsü -->
                     <div id="mobile-user-menu" class="hidden mt-2 bg-gray-100 rounded-md py-2">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Profiliniz</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Ayarlar</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Çıkış yap</a>
+                        <a asp-action="Profile" asp-controller="Account" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Profil</a>
+                        <a asp-action="Logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Çıkış yap</a>
                     </div>
                 </div>
                 <a href="#" class="block py-2 text-gray-600 hover:text-gray-800">

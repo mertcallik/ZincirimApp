@@ -1,0 +1,103 @@
+﻿@model AddressViewModel
+@{
+}
+
+@section style
+{
+    .topbar {
+        height: 0;
+        line-height: 0;
+        padding: 0;
+    }
+    .topbar, .top {
+        visibility: hidden;
+    }
+}
+
+<div class="col-md-11 mx-auto mt-3">
+    <div>
+        <div class="card rounded-3">
+            <div class="card-header card-title p-4 bg-light d-flex align-items-center">
+                <h1 class="me-auto fw-bolder">Adres Bilgilerim</h1>
+                <button class="btn btn-dark" data-bs-toggle="collapse" data-bs-target="#addAddressForm" aria-expanded="false" aria-controls="addAddressForm">Yeni Adres Ekle</button>
+            </div>
+        </div>
+
+        <div class="collapse col-6 mx-auto mt-3" id="addAddressForm">
+            <div class="card card-body">
+                <h1 class="text-center">Yeni Adres Ekle</h1>
+                <form asp-action="AddAddress" method="post">
+                    <div class="mb-1 d-flex gap-2">
+                        <input asp-for="State" class="form-control" placeholder="İlçe" />
+                        <input asp-for="Street" class="form-control" placeholder="Cadde" />
+                    </div>
+                    <div class="mb-1 d-flex gap-2">
+                        <input asp-for="Name" class="form-control" placeholder="Ad" />
+                        <input asp-for="SurName" class="form-control" placeholder="Soyad" />
+                    </div>
+                    <div class="mb-1">
+                        <textarea asp-for="FullAddress" class="form-control" placeholder="Açık Adres"></textarea>
+                    </div>
+                    <div class="mb-1 d-flex gap-2">
+                        <input asp-for="Country" class="form-control" placeholder="Ülke" />
+                        <input asp-for="City" class="form-control" placeholder="Şehir" />
+                        <input asp-for="PostalCode" class="form-control" placeholder="Posta Kodu" />
+                    </div>
+                    <div class="mb-1">
+                        <input asp-for="ContactPhoneNumber" class="form-control" placeholder="Contact Phone Number" />
+                    </div>
+                    <button class="btn btn-outline-dark w-100" type="submit">Yeni Adres Ekle</button>
+                    <div asp-validation-summary="All"></div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card rounded-3 mt-3">
+            <div class="card-body">
+                <div class="row">
+                    @foreach (var address in Model.AdressList.Addressess)
+                    {
+                        <div class="col-lg-4 mb-3 d-flex">
+                            <div class="card address-card w-100">
+                                <div class="card-header">
+                                    <div class="card-title">@address.State / @address.Street</div>
+                                </div>
+                                <div class="card-body">
+                                    <p>@address.Name @address.SurName</p>
+                                    <p>@address.Street</p>
+                                    <p>@address.FullAddress</p>
+                                    <p>@address.City / @address.State</p>
+                                    <p>@address.ContactPhoneNumber</p>
+                                    @if (address.IsActive)
+                                    {
+                                        <strong>Aktif Adresiniz</strong>
+                                    }
+                                    else
+                                    {
+                                        <div>
+                                            <div class="form-check form-switch">
+                                                <form id="addressForm_@address.Id" asp-action="ActiveAddress" method="post">
+                                                    <input type="hidden" name="id" value="@address.Id" />
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault_@address.Id"
+                                                           onclick="if (confirm('Bu adresi aktif adresiniz yapmak istiyor musunuz?')) { document.getElementById('addressForm_@address.Id').submit(); } else { this.checked = false; }">
+                                                    <label class="form-check-label" for="flexSwitchCheckDefault_@address.Id">Aktif Adres yap</label>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="d-flex mt-3 justify-content-between p-3">
+                                    <a href="#" class="btn btn-outline-dark">Düzenle</a>
+                                    <form asp-action="DeleteAddress" method="post" onsubmit="return confirm('Bu adresi silmek istiyor musunuz?')">
+                                        <input type="hidden" asp-for="Id" value="@address.Id" />
+                                        <button type="submit" class="btn btn-outline-danger">Sil</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Security.Claims;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Policy;
+using Microsoft.AspNetCore.Authorization;
 using Zincirimr.Data.Abstract;
 using Zincirimr.Data.Models;
 using Zincirimr.Web.Models.Mail;
@@ -107,5 +109,19 @@ namespace Zincirimr.Web.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        [Authorize]
+        public IActionResult Profile()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+           await _authRepository.Logout();
+            return RedirectToAction("Index", "Home");
+        }
+
+
     }
 }

@@ -29,8 +29,6 @@ namespace Zincirimr.Web.Pages
                 var product = _productRepository.Products.FirstOrDefault(p => p.Url == url);
                 if (product!=null)
                 {
-                    Console.WriteLine("eklendi");
-
                     Cart?.AddItem(product, 1);
                 
                 }

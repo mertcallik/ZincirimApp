@@ -23,7 +23,7 @@ namespace Zincirimr.Web.Controllers
             _productRepository = productRepository;
             _mapper = mapper;
         }
-        private int _pageSize = 4;
+        private int _pageSize = 11;
 
         [HttpGet] 
         public IActionResult Index(string? category, int page = 1)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,8 +24,14 @@ namespace Zincirimr.Data.Concreate
             base.OnModelCreating(builder);
             builder.Entity<Product>().HasMany(p => p.Categories).WithMany(c => c.Products)
                 .UsingEntity<ProductCategory>();
+            builder.Entity<AppUser>().HasMany<Address>(u => u.Addresses).WithOne(a => a.AppUser).HasForeignKey(f => f.UserId);
+
             builder.Entity<Category>().HasIndex(u => u.Url).IsUnique();
             builder.Entity<Product>().HasIndex(p => p.Url).IsUnique();
+
+            builder.Entity<AppUser>().HasMany<Order>().WithOne(o => o.User).HasForeignKey(o=>o.UserId);
+           
+
 
             builder.Entity<Product>().HasData(new List<Product>()
             {
@@ -93,10 +100,36 @@ namespace Zincirimr.Data.Concreate
                 new ProductCategory { ProductId = 10, CategoryId = 3 },
             });
 
+            var hasher = new PasswordHasher<AppUser>();
+            var user = new AppUser()
+            {
+
+                Email = "mertclkreal@gmail.com",
+                Id = "1",
+                EmailConfirmed = true,
+                FirstName = "Mert",
+                LastName = "Çalık",
+                UserName = "admin",
+                PhoneNumber = " +90 541 462 52 56",
+                SecurityStamp = Guid.NewGuid().ToString()
+            };
+            user.PasswordHash = hasher.HashPassword(user, "xad123");
+
+            builder.Entity<AppUser>().HasData(user);
+
+            builder.Entity<Address>().HasData(new List<Address>
+            {
+                new Address
+                {
+                    Id = 1, UserId = "1", Street = "51.bölge caddesi",Country = "Turkey",FullAddress = "İstanbul Başakşehir Kayabaşı mah 51.bölge",City = "İstanbul",ContactPhoneNumber = "+90 5414625256",IsActive = true,PostalCode = "34000",State = "Başakşehir"
+                    }
+                });
         }
 
         public DbSet<Product> Products => Set<Product>();
         public DbSet<Category> Categories => Set<Category>();
+        public DbSet<Address> Addresses => Set<Address>();
+        public DbSet<Order> Orders => Set<Order>();
 
     }
 }

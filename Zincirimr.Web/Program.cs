@@ -66,6 +66,7 @@ namespace Zincirimr.Web
             builder.Services.AddScoped<IAuthRepository, EfAuthRepository>();
             builder.Services.AddScoped<IProductRepository, EfProductRepository>();
             builder.Services.AddScoped<ICategoryRepository, EfCategoryRepository>();
+            builder.Services.AddScoped<IAddressRepository, EfAdressRepository>();
             builder.Services.AddAutoMapper(typeof(Program));
             builder.Services.AddSession();
             builder.Services.AddDistributedMemoryCache();
@@ -83,6 +84,8 @@ namespace Zincirimr.Web
             );
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             builder.Services.AddScoped<Cart>(sc=>SessionCart.GetCart(sc));
+
+            builder.Services.AddScoped<IOrderRepository, EfOrderRepository>();
 
             var app = builder.Build();
 
